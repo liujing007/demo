@@ -1,0 +1,7 @@
+server:
+  port: 8105
+
+
+client:
+  resource-portal:
+    host: http://47.101.208.30:8105
