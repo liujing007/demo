@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.File;
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
@@ -28,12 +29,12 @@ public class DemoController {
     @GetMapping(value = "/demo1")
     public ResponseEntity<?> demo(@RequestParam(required = false) Long workspaceId,
                                      @RequestParam(required = false) Long cubeId,
-                                     @RequestParam(required = false) String analysisName) {
+                                     @RequestParam(required = false) String analysisName) throws UnsupportedEncodingException {
         File file = FileUtil.writeUtf8String("s", "\\mnt\\data\\demo1.txt");
         ResponseEntity.BodyBuilder ok = ResponseEntity.ok();
         ok.contentLength(file.length());
         ok.contentType(MediaType.parseMediaType(MediaType.APPLICATION_OCTET_STREAM_VALUE));
-        ok.header("Content-Disposition", "attachment; filename=" + URLEncoder.encode("demo1.txt", StandardCharsets.UTF_8));
+        ok.header("Content-Disposition", "attachment; filename=" + URLEncoder.encode("demo1.txt", "UTF-8"));
         return ok.body(new FileSystemResource(file));
     }
 
